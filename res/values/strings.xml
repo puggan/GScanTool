@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GScanTool</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    
+    <string name="app_name" translatable="false">GScanTool</string>
     <string name="appLongName">Generic Scaner tool for QR and barcodes</string>
     <string name="instruction1">Start by scaning the QR-code on the projects website</string>
     <string name="initButton">Start Camera/Scanning</string>
