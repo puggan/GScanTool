@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appLongName">Genrisk skanner verktyk för QR- och streck-koder</string>
+    <string name="instruction1">Starta med att skanna QR-koden på projectets websida</string>
+    <string name="initButton">Starta Kamera/Skanning</string>
+    
+    <string name="errorTitle">FEL</string>
+    <string name="errorButton">Ignorera</string>
+    <string name="messageButton">OK</string> 
+    
+    <string name="messageLoaded">Projekt %s laddat</string>
+    <string name="messageLoadedUrl">GScanTool ansluten till %s</string>
+    
+</resources>
