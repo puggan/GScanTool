@@ -42,7 +42,6 @@ public class GScanTool extends android.support.v7.app.ActionBarActivity
 
 						}
 						alertDialog = null;
-						Log.d("GScanTool", "init_scan");
 						ii.initiateScan();
 					}
 					break;
@@ -60,7 +59,6 @@ public class GScanTool extends android.support.v7.app.ActionBarActivity
 	{
 		public void onClick(android.content.DialogInterface dialog, int id)
 		{
-			Log.d("GScanTool", "init_scan");
 			ii.initiateScan();
 		}
 	};
@@ -287,14 +285,14 @@ Log.d("GScanTool", "Scanned: " + result);
 
 										//switch(posttype)
 										//case "plain":
-										if(posttype == "plain")
+										if (posttype != null && posttype.equals("plain"))
 										{
 											post.setEntity(new org.apache.http.entity.StringEntity(result));
 											new HttpPost().execute(post);
 											//break;
 										}
 										//case "json":
-										else if(posttype == "json")
+										else if (posttype != null && posttype.equals("json"))
 										{
 											org.json.JSONObject json_request;
 											json_request = new org.json.JSONObject();
@@ -305,15 +303,28 @@ Log.d("GScanTool", "Scanned: " + result);
 											//break;
 										}
 										//case "get":
-										else if(posttype == "get")
+										else if (posttype != null && posttype.equals("get"))
 										{
 											java.net.URL geturl;
-											geturl = new java.net.URL(posturl,
-												"?type=" +
+											StringBuilder geturl_string = new StringBuilder(posturl.toString());
+
+											if(posturl.getQuery() != null)
+											{
+												geturl_string.append('&');
+											}
+											else
+											{
+												geturl_string.append('?');
+											}
+
+											geturl_string.append(
+												"type=" +
 												java.net.URLEncoder.encode(result_type, "UTF-8") +
-												"&data=" +
+												"&" +
+												"data=" +
 												java.net.URLEncoder.encode(result, "UTF-8")
 												);
+											geturl = new java.net.URL(geturl_string.toString());
 											//post = new org.apache.http.client.methods.HttpPost(geturl.toString());
 											new HttpGet().execute(geturl);
 											//break;
@@ -363,8 +374,6 @@ Log.d("GScanTool", "Scanned: " + result);
 
 	private void parseResult(String result, java.net.URL current_url) throws org.json.JSONException
 	{
-Log.d("GScanTool", "parseResult: " + result);
-
 		Boolean settings_changed = false;
 		String message = null;
 		org.json.JSONObject json_result;
@@ -386,7 +395,7 @@ Log.d("GScanTool", "parseResult: " + result);
 			try
 			{
 				posturl = new java.net.URL(json_result.getString("url"));
-Log.d("GScanTool", "New URL: " + posturl);
+
 				if(message == null)
 				{
 					//message = "GScanTool connected to " + json_result.getString("url");
@@ -406,7 +415,6 @@ Log.d("GScanTool", "New URL: " + posturl);
 		else if(posturl == null)
 		{
 			posturl = current_url;
-Log.d("GScanTool", "Auto URL: " + posturl);
 		}
 
 		if(json_result.has("type"))
@@ -417,7 +425,7 @@ Log.d("GScanTool", "Auto URL: " + posturl);
 		if(settings_changed)
 		{
 			setsettings(project_name, posturl.toString(), posttype);
-Log.d("GScanTool", "Saving settings");
+
 			reset_view();
 		}
 
@@ -538,7 +546,7 @@ Log.d("GScanTool", "HttpPost: " + current_url.toString());
 			}
 
 			return new BackgroundResponse(current_url, responseText, 0);
-} catch (Exception e) { e.printStackTrace(); Log.d("GScanTool", "Exception A: " + e.getMessage()); return null;}
+} catch (Exception e) { e.printStackTrace(); Log.e("GScanTool", "Exception A: " + e.getMessage()); return null;}
 		}
 
 		// This is called when doInBackground() is finished
@@ -562,14 +570,13 @@ try {
 				show_error(response.text);
 				return;
 			}
-} catch (Exception e) { e.printStackTrace(); Log.d("GScanTool", "Exception B: " + e.getMessage()); return;}
+} catch (Exception e) { e.printStackTrace(); Log.e("GScanTool", "Exception B: " + e.getMessage()); return;}
 		}
 
 	}
 
 	public GScanSettings getsettings()
 	{
-Log.d("GScanTool", "getsettings");
 		GScanSettings result = new GScanSettings("", "", "");
 
 		android.content.SharedPreferences settings = getSharedPreferences(
@@ -583,7 +590,6 @@ Log.d("GScanTool", "getsettings");
 
 	public void setsettings(String new_name, String new_url, String new_type)
 	{
-Log.d("GScanTool", "setsettings");
 		android.content.SharedPreferences settings = getSharedPreferences(
 				"GScanTool", 0);
 		android.content.SharedPreferences.Editor set_ed = settings.edit();
