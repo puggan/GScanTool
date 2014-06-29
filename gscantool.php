@@ -15,8 +15,8 @@
 		<ul>
 			<li>
 				<span>Android paket:</span>
-				<a href='GScanTool_1_02.apk'>GScanTool_1_02.apk</a>
-				<span>(v1.02 relesed 2014-06-29)</span>
+				<a href='GScanTool_1_03.apk'>GScanTool_1_03.apk</a>
+				<span>(v1.03 relesed 2014-06-29)</span>
 			</li>
 			<li>
 				<span>Google Play link:</span>
@@ -40,7 +40,7 @@
 		<ul>
 			<li>(Add your project here, be emailing <a href='mailto:gscantool@puggan.se?subject=_____+is+using+GScanTool'>gscantool@puggan.se</a>)</li>
 			<li><a href='echo.php'>Echo - test</a></li>
-			<li><a href='test/test.php'>GScanTool function-test</a>, Runed by app-developer before pulicing a new version</li>
+			<li><a href='test/test.php'>GScanTool unit-test</a>, Runed by app-developer before pulicing a new version</li>
 		</ul>
 
 		<h2>For developers</h2>
@@ -71,7 +71,7 @@
 					</li>
 					<li>
 						<b>type</b>
-						<span>, prefered data format: get, post, json, plain. default: undefined </span>
+						<span>, prefered data format: get, post, json, plain. default: post </span>
 					</li>
 					<li>
 						<b>text</b>
@@ -89,6 +89,7 @@
 			<li>v1.00, 2014-06-21, first release</li>
 			<li>v1.01, 2014-06-21, moved webrequest to background thread, fix for bug on android 3.0+</li>
 			<li>v1.02, 2014-06-29, remember project between uses</li>
+			<li>v1.03, 2014-06-29, Now supports diffrent comunication protocols: git, json, plain and post</li>
 		</ul>
 
 		<h3>Test units</h3>
@@ -106,6 +107,26 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr class='valid'>
+					<td>v1.03</td>
+					<td>2014-06-29<span style='display: none;'>00:00:00 D</span></td>
+					<td>Working</td>
+					<td>4.4.2</td>
+					<td>19</td>
+					<td>KitKat</td>
+					<td>SM-T230</td>
+					<td>Samsung Galaxy Tab 4</td>
+				</tr>
+				<tr class='valid'>
+					<td>v1.03</td>
+					<td>2014-06-29<span style='display: none;'>00:00:00 C</span></td>
+					<td>Working</td>
+					<td>2.3.7</td>
+					<td>10</td>
+					<td>Gingerbread</td>
+					<td>ST27i</td>
+					<td>Sony Xperia Go</td>
+				</tr>
 				<tr class='valid'>
 					<td>v1.02</td>
 					<td>2014-06-29<span style='display: none;'>00:00:00 B</span></td>
