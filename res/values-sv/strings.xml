@@ -2,8 +2,13 @@
 <resources>
 
     <string name="appLongName">Genrisk skanner verktyk för QR- och streck-koder</string>
-    <string name="instruction1">Starta med att skanna QR-koden på projectets websida</string>
+    <string name="about_project">Trcyk på projekt-knappen för att fortsätta scanna QR/streck-koder för Projektet</string>
+    <string name="about_no_project">Välj ett project innan du börjar</string>
+    <string name="no_project">INGET Projekt</string>
     <string name="initButton">Starta Kamera/Skanning</string>
+    
+    <string name="about_switch">Knappen för att byta projekt</string>
+    <string name="switchButton">Byt Projekt</string>
     
     <string name="errorTitle">FEL</string>
     <string name="errorButton">Ignorera</string>
@@ -11,5 +16,4 @@
     
     <string name="messageLoaded">Projekt %s laddat</string>
     <string name="messageLoadedUrl">GScanTool ansluten till %s</string>
-    
 </resources>
