@@ -21,7 +21,7 @@
 		<h2>Step 0 - Start app</h2>
 		<p>Start the app, from the device, or from the developer tool</p>
 		<h3>Expected result</h3>
-		<p><img src='screenshot_step_01.png' alt='[Screenshoot of step 0]' /></p>
+		<p><img src='screenshot_step_00.png' alt='[Screenshoot of step 0]' /></p>
 		<h2>Step 1 - {$tests[1]['title']}</h2>
 		<p>
 			<span>Press 'Change Project' and scan this code</span>
