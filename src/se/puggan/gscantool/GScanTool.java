@@ -250,6 +250,10 @@ Log.d("GScanTool", "Scanned: " + result);
 										posturl = null;
 									}
 								}
+								else
+								{
+									posturl = null;
+								}
 								if ((settings.type != null)
 										&& (settings.type.length() > 0))
 								{
