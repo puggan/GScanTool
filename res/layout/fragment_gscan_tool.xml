@@ -18,24 +18,43 @@
         android:text="@string/appLongName" />
 
     <TextView
-        android:id="@+id/textInstruction"
+        android:id="@+id/textInstructionProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textAppLongName"
-        android:text="@string/instruction1"
+        android:text="@string/about_no_project"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/projectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textInstructionProject"
+        android:layout_marginTop="15dp"
+        android:onClick="init_scan"
+        android:text="@string/initButton" />
 
     <Button
         android:id="@+id/initButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textInstruction"
-        android:layout_marginTop="15dp"
-        android:onClick="init_scan"
-        android:text="@string/initButton" />
+        android:onClick="reset_scan"
+        android:text="@string/switchButton" />
+
+    <TextView
+        android:id="@+id/textInstructionSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/initButton"
+        android:layout_alignLeft="@+id/initButton"
+        android:text="@string/about_switch"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

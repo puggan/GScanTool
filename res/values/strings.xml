@@ -3,8 +3,14 @@
 
     <string name="app_name" translatable="false">GScanTool</string>
     <string name="appLongName">Generic Scaner tool for QR and barcodes</string>
-    <string name="instruction1">Start by scaning the QR-code on the projects website</string>
+
+    <string name="about_project">Press the button to continue to scan QR/bar-codes for project</string>
+    <string name="about_no_project">Select a project before you can collect data</string>
+    <string name="no_project">NO Project</string>
     <string name="initButton">Start Camera/Scanning</string>
+
+    <string name="about_switch">Use this button to change project</string>
+    <string name="switchButton">Change Project</string>
     
     <string name="errorTitle">ERROR</string>
     <string name="errorButton">Ignore</string>

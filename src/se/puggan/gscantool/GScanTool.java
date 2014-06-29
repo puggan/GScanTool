@@ -1,15 +1,7 @@
 package se.puggan.gscantool;
 
-import android.support.v4.app.Fragment;
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-//import android.os.Build;
 
 public class GScanTool extends android.support.v7.app.ActionBarActivity
 {
@@ -22,9 +14,7 @@ public class GScanTool extends android.support.v7.app.ActionBarActivity
 	private java.net.URL posturl = null;
 	private String posttype = null;
 
-//	static final int TIME_OUT = 20000;
 	static final int TIME_OUT = 3000;
-//	static final int ERROR_TIME_OUT = 5000;
 	static final int MSG_DISMISS_DIALOG = 0;
 
 	public String s(int string_id)
@@ -52,7 +42,7 @@ public class GScanTool extends android.support.v7.app.ActionBarActivity
 
 						}
 						alertDialog = null;
-Log.d("GScanTool", "init_scan");
+						Log.d("GScanTool", "init_scan");
 						ii.initiateScan();
 					}
 					break;
@@ -70,7 +60,7 @@ Log.d("GScanTool", "init_scan");
 	{
 		public void onClick(android.content.DialogInterface dialog, int id)
 		{
-Log.d("GScanTool", "init_scan");
+			Log.d("GScanTool", "init_scan");
 			ii.initiateScan();
 		}
 	};
@@ -113,33 +103,66 @@ Log.d("GScanTool", "show error: " + message);
 
 		alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-//		handler.sendEmptyMessageDelayed(MSG_DISMISS_DIALOG, ERROR_TIME_OUT);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(android.os.Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
+		// super.onCreate(null);
+
 		project_name = s(R.string.app_name);
 		setContentView(R.layout.activity_gscan_tool);
 
-		if (savedInstanceState == null) {
+		if (savedInstanceState == null)
+		{
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment())
-					.commit();
+				.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+	}
+
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+
+		reset_view();
+	}
+
+	public void reset_view()
+	{
+		GScanSettings settings;
+		settings = getsettings();
+
+		android.widget.Button b = (android.widget.Button) findViewById(R.id.projectButton);
+		android.widget.TextView tv = (android.widget.TextView) findViewById(R.id.textInstructionProject);
+
+		if ((settings.name != null) && (settings.name.length() > 0))
+		{
+Log.w("GScanTool", "Setting name:" + settings.name);
+			project_name = settings.name;
+			b.setText(settings.name);
+			tv.setText(R.string.about_project);
+		}
+		else
+		{
+			project_name = null;
+			b.setText(R.string.no_project);
+			tv.setText(R.string.about_no_project);
 		}
 	}
 
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
+	public boolean onCreateOptionsMenu(android.view.Menu menu)
+	{
 		getMenuInflater().inflate(R.menu.gscan_tool, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(android.view.MenuItem item)
+	{
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
@@ -153,22 +176,34 @@ Log.d("GScanTool", "show error: " + message);
 	/**
 	* A placeholder fragment containing a simple view.
 	*/
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends
+			android.support.v4.app.Fragment
+	{
 
 		public PlaceholderFragment() {
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_gscan_tool, container, false);
+		public android.view.View onCreateView(
+				android.view.LayoutInflater inflater,
+				android.view.ViewGroup container,
+				android.os.Bundle savedInstanceState)
+		{
+			android.view.View rootView = inflater.inflate(
+					R.layout.fragment_gscan_tool, container, false);
 			return rootView;
 		}
 	}
 
-	public void init_scan(View view)
+	public void init_scan(android.view.View view)
 	{
-Log.d("GScanTool", "init_scan");
+		ii.initiateScan();
+	}
+
+	public void reset_scan(android.view.View view)
+	{
+		setsettings("", "", "");
+		reset_view();
 		ii.initiateScan();
 	}
 
@@ -203,6 +238,29 @@ Log.d("GScanTool", "Scanned: " + result);
 							public void run()
 							{
 								java.net.URL current_url = null;
+
+								GScanSettings settings;
+								settings = getsettings();
+								if ((settings.url != null) && (settings.url.length() > 0))
+								{
+									try
+									{
+										posturl = new java.net.URL(settings.url);
+									}
+									catch (java.net.MalformedURLException e)
+									{
+										posturl = null;
+									}
+								}
+								if ((settings.type != null)
+										&& (settings.type.length() > 0))
+								{
+									posttype = settings.type;
+								}
+								else
+								{
+									posttype = null;
+								}
 
 								if(posturl == null)
 								{
@@ -307,6 +365,7 @@ Log.d("GScanTool", "Scanned: " + result);
 	{
 Log.d("GScanTool", "parseResult: " + result);
 
+		Boolean settings_changed = false;
 		String message = null;
 		org.json.JSONObject json_result;
 		json_result = new org.json.JSONObject(result);
@@ -319,6 +378,7 @@ Log.d("GScanTool", "parseResult: " + result);
 				s(R.string.messageLoaded),
 				project_name
 				);
+			settings_changed = true;
 		}
 
 		if(json_result.has("url"))
@@ -341,6 +401,7 @@ Log.d("GScanTool", "New URL: " + posturl);
 				show_error("MalformedURLException\n" + e.getMessage());
 				return;
 			}
+			settings_changed = true;
 		}
 		else if(posturl == null)
 		{
@@ -351,6 +412,13 @@ Log.d("GScanTool", "Auto URL: " + posturl);
 		if(json_result.has("type"))
 		{
 			posttype = json_result.getString("type");
+		}
+
+		if(settings_changed)
+		{
+			setsettings(project_name, posturl.toString(), posttype);
+Log.d("GScanTool", "Saving settings");
+			reset_view();
 		}
 
 		if(json_result.has("text"))
@@ -496,5 +564,47 @@ try {
 			}
 } catch (Exception e) { e.printStackTrace(); Log.d("GScanTool", "Exception B: " + e.getMessage()); return;}
 		}
+
+	}
+
+	public GScanSettings getsettings()
+	{
+Log.d("GScanTool", "getsettings");
+		GScanSettings result = new GScanSettings("", "", "");
+
+		android.content.SharedPreferences settings = getSharedPreferences(
+				"GScanTool", 0);
+		result.name = settings.getString("name", "");
+		result.url = settings.getString("url", "");
+		result.type = settings.getString("type", "");
+
+		return result;
+	}
+
+	public void setsettings(String new_name, String new_url, String new_type)
+	{
+Log.d("GScanTool", "setsettings");
+		android.content.SharedPreferences settings = getSharedPreferences(
+				"GScanTool", 0);
+		android.content.SharedPreferences.Editor set_ed = settings.edit();
+		set_ed.putString("name", new_name);
+		set_ed.putString("url", new_url);
+		set_ed.putString("type", new_type);
+		set_ed.commit();
+	}
+
+	public class GScanSettings
+	{
+		public String name;
+		public String url;
+		public String type;
+
+		public GScanSettings(String new_url, String new_name, String new_type)
+		{
+			name = new_name;
+			url = new_url;
+			type = new_type;
+		}
 	}
 }
+
